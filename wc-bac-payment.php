@@ -73,6 +73,12 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
         'default' => __( 'Pague con seguridad usando su tarjeta de crédito.', 'bac-payment' ),
         'css'   => 'max-width:350px;'
       ),
+      'key_id' => array(
+        'title'   => __( 'Key id', 'bac-payment' ),
+        'type'    => 'text',
+        'desc_tip'  => __( 'Security Key Id from Merchant Control Panel', 'bac-payment' ),
+        'default' => '',
+      ),
       'api_key' => array(
         'title'   => __( 'Api key', 'bac-payment' ),
         'type'    => 'text',
@@ -94,7 +100,7 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
     
     $time = time();
 
-    $key_id = "8164673";
+    $key_id = $this->key_id;
 
 
     if(count($pagos) == 0){
