@@ -7,7 +7,7 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
     $this->id = "bac_payment";
 
     // The Title shown on the top of the Payment Gateways Page next to all the other Payment Gateways
-    $this->method_title = __( "BAC PAYTMENT GATEWAY", 'bac-payment' );
+    $this->method_title = __( "BAC PAYMENT GATEWAY", 'bac-payment' );
 
     // The description for this Payment Gateway, shown on the actual Payment options page on the backend
     $this->method_description = __( "BAC Payment Gateway Plug-in for WooCommerce", 'bac-payment' );
@@ -179,7 +179,7 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
     // Validate fields
    
 
-  }//end process paytment
+  }//end process payment
 
   public function validate_fields() {
     return true;
