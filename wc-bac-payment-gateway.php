@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: BAC PAYMENT GATEWAY
+Plugin Name: Gateway de pago del BAC
 Plugin URI: https://github.com/elaniin/Wocommerce-BAC-Payment-Gateway-Plugin
-Description: Extends WooCommerce Adding BAC PAYMENT GATEWAY.
+Description: Extiende WooCommerce añadiendo un gateway de pago del BAC.
 Version: 1
 Author: Elaniin
 Author URI: https://elaniin.com/

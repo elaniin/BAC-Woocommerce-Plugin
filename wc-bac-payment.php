@@ -63,26 +63,26 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
       'title' => array(
         'title'   => __( 'Título', 'bac-payment' ),
         'type'    => 'text',
-        'desc_tip'  => __( 'Payment title the customer will see during the checkout process.', 'bac-payment' ),
+        'desc_tip'  => __( 'Título de pago que el cliente verá durante el proceso de pago.', 'bac-payment' ),
         'default' => __( 'Tarjeta de crédito', 'bac-payment' ),
       ),
       'description' => array(
         'title'   => __( 'Descripción', 'bac-payment' ),
         'type'    => 'textarea',
-        'desc_tip'  => __( 'Payment description the customer will see during the checkout process.', 'bac-payment' ),
+        'desc_tip'  => __( 'Descripción de pago que el cliente verá durante el proceso de pago.', 'bac-payment' ),
         'default' => __( 'Pague con seguridad usando su tarjeta de crédito.', 'bac-payment' ),
         'css'   => 'max-width:350px;'
       ),
       'key_id' => array(
         'title'   => __( 'Key id', 'bac-payment' ),
         'type'    => 'text',
-        'desc_tip'  => __( 'Security Key Id from Merchant Control Panel', 'bac-payment' ),
+        'desc_tip'  => __( 'ID de clave de seguridad del panel de control del comerciante.', 'bac-payment' ),
         'default' => '',
       ),
       'api_key' => array(
         'title'   => __( 'Api key', 'bac-payment' ),
         'type'    => 'text',
-        'desc_tip'  => __( 'Security Key Id from Merchant Control Panel', 'bac-payment' ),
+        'desc_tip'  => __( 'ID de clave de api del panel de control del comerciante.', 'bac-payment' ),
         'default' => '',
       ),
     );    
