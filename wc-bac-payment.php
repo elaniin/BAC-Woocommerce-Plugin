@@ -150,6 +150,8 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
         return [$r2[0] =>$r2[1]];
       }, $resp);
 
+    $membership_code = $_POST['checkout_membership'];
+    $membership_code_exist = $this->validateMembershipCode($membership_code);
 
     // Test the code to know if the transaction went through or not.
     // 1 or 4 means the transaction was a success
@@ -162,6 +164,13 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
 
       // Empty the cart (Very important step)
       $woocommerce->cart->empty_cart();
+
+      //add amount to membership card
+
+      if(count($membership_code_exist) >= 1){
+        $amount = $customer_order->order_total;
+        $this->addShippingToMembership($amount,$membership_code,$order_id);
+      }
 
       // Redirect to thank you page
       return array(
@@ -176,10 +185,63 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
       $customer_order->add_order_note( 'Error: '. $resp[0]['responsetext'] );
     }
 
-    // Validate fields
+    //Validate fields
    
 
   }//end process payment
+
+  public function addShippingToMembership($amount,$user_code,$order_id){
+    $api_url = "http://toolboxsv.com/dev/drinkit_api_membership/index.php/membership";
+    $headers = array( 'key' => "k2hB649dAB",
+                      'token' => "797AADE7D1C7F9576D325EC32A241",
+                      'mode' => "live",
+                      'Content-Type' => "application/json");
+
+    $body_request = array(  'code' => $user_code,
+                            'amount' => $amount,
+                            'order_id' => $order_id);
+
+    $body_request_json = json_encode($body_request);
+
+    $response = wp_remote_post( $api_url, array(
+      'method'    => 'POST',
+      'headers' => $headers,
+      'body'      => $body_request_json,
+      'timeout'   => 90,
+      'sslverify' => false,
+    ) );
+
+
+    $response_body = wp_remote_retrieve_body( $response );
+    // print_r($response_body);
+  }
+
+  public function validateMembershipCode($code){
+    $api_url = "http://toolboxsv.com/dev/drinkit_api_membership/index.php/users?filter[]=code,eq,".$code;
+    $headers = array( 'key' => "k2hB649dAB",
+                      'token' => "797AADE7D1C7F9576D325EC32A241",
+                      'mode' => "live",
+                      'Content-Type' => "application/json");
+
+    $args = array(
+      'timeout'     => 90,
+      'redirection' => 5,
+      'httpversion' => '1.0',
+      'blocking'    => true,
+      'headers'     => $headers,
+      'body'        => null,
+      'sslverify'   => false,
+    ); 
+
+    $response = wp_remote_get( $api_url, $args );
+
+    $body = $response['body']; // use the content
+
+    $character = json_decode($body);
+
+    return $character->users->records;
+
+  }
 
   public function validate_fields() {
     return true;
