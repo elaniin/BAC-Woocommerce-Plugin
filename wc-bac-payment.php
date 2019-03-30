@@ -103,11 +103,7 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
     $key_id = $this->key_id;
 
 
-    if(count($pagos) == 0){
-      $orderid = 1000;
-    }else{
-      $orderid = 1000 + count($pagos);
-    }
+    $orderid = str_replace( "#", "", $customer_order->get_order_number() );
 
     $hash = md5($orderid."|".$customer_order->order_total."|".$time."|".$this->api_key);
 
@@ -143,19 +139,23 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
     $response_body = wp_remote_retrieve_body( $response );
 
     // Parse the response into something we can read
-    $resp = explode( "&", $response_body );
-    $resp = array_map(function($r)
-      {
-        $r2 =  explode("=", $r);
-        return [$r2[0] =>$r2[1]];
-      }, $resp);
-
+    $resp_e = explode( "&", $response_body );
+    $resp = array();
+    foreach($resp_e as $r) {
+      $v = explode('=', $r);
+      $resp[$v[0]] = $v[1];
+    }
 
     // Test the code to know if the transaction went through or not.
     // 1 or 4 means the transaction was a success
-    if ( ($resp[0]['response'] == 1 ) || ( $resp[0]['response_code'] == 100 ) ) {
+    if ( ($resp['response'] == 1 ) || ( $resp['response_code'] == 100 ) ) {
       // Payment has been successful
       $customer_order->add_order_note( __( 'BAC payment completed.', 'bac-payment' ) );
+      
+      // Saving the bac info
+      $order_id = method_exists( $customer_order, 'get_id' ) ? $customer_order->get_id() : $customer_order->ID;
+      update_post_meta($order_id , '_wc_order_bac_authcode', $resp['authcode'] );
+			update_post_meta($order_id , '_wc_order_bac_transactionid', $resp['transactionid'] );
                          
       // Mark order as Paid
       $customer_order->payment_complete();
@@ -171,9 +171,9 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
     } else {
       // Transaction was not succesful
       // Add notice to the cart
-      wc_add_notice( $resp[0]['responsetext'], 'error' );
+      wc_add_notice( $resp['responsetext'], 'error' );
       // Add note to the order for your reference
-      $customer_order->add_order_note( 'Error: '. $resp[0]['responsetext'] );
+      $customer_order->add_order_note( 'Error: '. $resp['responsetext'] );
     }
 
     // Validate fields
@@ -195,6 +195,16 @@ class Bac_Payment_Gateway extends WC_Payment_Gateway {
     }   
   }
 
+}
+
+/**
+ * Display field value on the order edit page
+ */
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'show_bac_info', 10, 1 );
+function show_bac_info( $order ){
+    $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+    echo '<p><strong>'.__('BAC Auth Code').':</strong> ' . get_post_meta( $order_id, '_wc_order_bac_authcode', true ) . '</p>';
+    echo '<p><strong>'.__('BAC Transaction Id').':</strong> ' . get_post_meta( $order_id, '_wc_order_bac_transactionid', true ) . '</p>';
 }
 
 ?>
