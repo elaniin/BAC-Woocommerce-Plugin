@@ -14,7 +14,7 @@ This is a BAC extension for the WooCommerce shopping cart system on WordPress. A
   1. Unzip the files and upload the folder into your plugins folder (wp-content/plugins/).
   2. Activate the plugin in your WordPress admin area.
  
- ![screenshot-1](http://toolboxsv.com/git/bac/screenshot-1.png)
+ ![screenshot-1](https://opensource.elaniin.com/BAC-Woocommerce-Plugin/screenshot-1.png)
  
  ### Configuration
   1. Go to **WooCommerce** -> **Settings** section
@@ -22,7 +22,7 @@ This is a BAC extension for the WooCommerce shopping cart system on WordPress. A
   2. Click on the sub-item for BAC Payment Gateway.
   4. Enable and configure the plugin
 
- ![screenshot-2](http://toolboxsv.com/git/bac/screenshot-2.png)
+ ![screenshot-2](https://opensource.elaniin.com/BAC-Woocommerce-Plugin/screenshot-2.png)
  
  #### Setting your BAC API Keys
 
@@ -44,7 +44,7 @@ Esta es una extensión de BAC para el sistema de carrito de compras de WooCommer
   1. Descomprime los archivos y sube esta carpeta dentro de tu carpeta de plugins (wp-content/plugins/).
   2. Activa el complemento en el área de administración WordPress.
  
- ![screenshot-1](http://toolboxsv.com/git/bac/screenshot-1.png)
+ ![screenshot-1](https://opensource.elaniin.com/BAC-Woocommerce-Plugin/screenshot-1.png)
  
 ### Configuración
   1. Ir a la sección **WooCommerce** -> **Ajustes**.
@@ -52,7 +52,7 @@ Esta es una extensión de BAC para el sistema de carrito de compras de WooCommer
   2. Click en el item con el nombre "BAC Payment Gateway".
   4. Habilite y configure el complemento.
 
- ![screenshot-2](http://toolboxsv.com/git/bac/screenshot-2.png)
+ ![screenshot-2](https://opensource.elaniin.com/BAC-Woocommerce-Plugin/screenshot-2.png)
  
  #### Configurando tus API Key proporcionadas por BAC
 
